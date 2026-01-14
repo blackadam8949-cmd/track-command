@@ -1,11 +1,9 @@
-import { GoogleGenAI, Type } from "@google/genai";
+import { GoogleGenAI } from "@google/genai";
 import { EventGroup } from '../types';
 
-// Safely access env variable with fallback to prevent crashes
-// The ?. syntax ensures it returns undefined instead of throwing error if env is missing
-const apiKey = import.meta.env?.VITE_API_KEY || '';
+// Use process.env.API_KEY as strictly required
+const apiKey = process.env.API_KEY || '';
 
-// Initialize with safety check
 const ai = new GoogleGenAI({ apiKey: apiKey });
 
 export const generateWorkoutPlan = async (
@@ -14,7 +12,7 @@ export const generateWorkoutPlan = async (
   focus: string
 ): Promise<string> => {
   if (!apiKey) {
-    return "Error: API Key missing. Please check your Vercel Environment Variables or .env file.";
+    return "Error: API Key missing. Please check your .env file or Vercel settings.";
   }
 
   try {

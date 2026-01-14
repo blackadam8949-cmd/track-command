@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Card, Button } from './Shared';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { Activity, TrendingUp } from 'lucide-react';
+import { TrendingUp, Award, Wind } from 'lucide-react';
 import { analyzePerformance } from '../services/geminiService';
 
 const MOCK_STATS_DATA = [
@@ -25,31 +25,29 @@ export const Stats: React.FC = () => {
 
   return (
     <div className="space-y-6 animate-fade-in">
-      <div className="flex justify-between items-center">
-        <h2 className="text-3xl font-display font-bold text-white uppercase tracking-tighter">Performance Lab</h2>
-      </div>
+      <h2 className="text-3xl font-display font-bold text-white uppercase tracking-tighter">Performance Lab</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Card className="md:col-span-2 min-h-[400px]">
           <div className="flex justify-between items-center mb-6">
              <div>
                <h3 className="text-xl font-display font-bold text-white uppercase">Jordan Miller</h3>
-               <p className="text-track-gold text-sm font-bold uppercase">100m Progression</p>
+               <p className="text-track-gold text-xs font-bold uppercase tracking-wider">100m Progression</p>
              </div>
              <div className="text-right">
-               <p className="text-xs text-gray-400 uppercase">Season Best</p>
-               <p className="text-2xl font-display font-bold text-white">10.82s</p>
+               <p className="text-xs text-gray-400 uppercase font-bold">Season Best</p>
+               <p className="text-3xl font-display font-bold text-white tracking-tighter">10.82s</p>
              </div>
           </div>
           
           <div className="h-[300px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={MOCK_STATS_DATA}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#333" />
-                <XAxis dataKey="date" stroke="#666" tick={{fill: '#999', fontSize: 12}} />
-                <YAxis domain={['dataMin - 0.2', 'dataMax + 0.2']} stroke="#666" tick={{fill: '#999', fontSize: 12}} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" vertical={false} />
+                <XAxis dataKey="date" stroke="#666" tick={{fill: '#999', fontSize: 10}} axisLine={false} tickLine={false} dy={10} />
+                <YAxis domain={['dataMin - 0.2', 'dataMax + 0.2']} stroke="#666" tick={{fill: '#999', fontSize: 10}} axisLine={false} tickLine={false} dx={-10} />
                 <Tooltip 
-                  contentStyle={{ backgroundColor: '#0f392b', borderColor: '#fbbf24', color: '#fff' }}
+                  contentStyle={{ backgroundColor: '#022c22', borderColor: '#fbbf24', color: '#fff', borderRadius: '4px' }}
                   itemStyle={{ color: '#fbbf24' }}
                 />
                 <Line 
@@ -57,8 +55,8 @@ export const Stats: React.FC = () => {
                   dataKey="time" 
                   stroke="#fbbf24" 
                   strokeWidth={3} 
-                  dot={{ r: 4, fill: '#fbbf24', strokeWidth: 2, stroke: '#fff' }} 
-                  activeDot={{ r: 6 }} 
+                  dot={{ r: 4, fill: '#022c22', strokeWidth: 2, stroke: '#fbbf24' }} 
+                  activeDot={{ r: 6, fill: '#fbbf24' }} 
                 />
               </LineChart>
             </ResponsiveContainer>
@@ -66,17 +64,17 @@ export const Stats: React.FC = () => {
         </Card>
 
         <div className="space-y-6">
-          <Card className="h-full flex flex-col">
+          <Card className="h-full flex flex-col border-track-gold/30">
              <div className="flex items-center gap-2 mb-4 text-track-gold">
               <TrendingUp className="w-5 h-5" />
-              <h3 className="text-lg font-display font-bold uppercase">Coach's Insight</h3>
+              <h3 className="text-lg font-display font-bold uppercase">AI Analysis</h3>
             </div>
             
-            <div className="flex-1 bg-black/20 p-4 rounded mb-4 text-sm text-gray-300 leading-relaxed border border-white/5">
+            <div className="flex-1 bg-black/30 p-4 rounded-lg mb-4 text-sm text-gray-300 leading-relaxed border border-white/5">
               {analysis ? (
                 <p className="animate-fade-in">{analysis}</p>
               ) : (
-                <p className="text-gray-500 italic">Select a dataset and ask the AI for performance analysis to identify trends and plateaus.</p>
+                <p className="text-gray-500 italic text-xs">Run analysis to identify trends, fatigue patterns, and technical improvements.</p>
               )}
             </div>
 
@@ -88,17 +86,14 @@ export const Stats: React.FC = () => {
       </div>
 
        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {[
-            { label: 'Avg Reaction', val: '0.145s' },
-            { label: 'Wind Avg', val: '+0.8' },
-            { label: 'Meets', val: '5' },
-            { label: 'Rank', val: '#1' }
-          ].map((stat, i) => (
-             <Card key={i} className="p-4 text-center border-t-4 border-t-track-gold">
-                <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">{stat.label}</p>
-                <p className="text-2xl md:text-3xl font-display font-bold text-white mt-1">{stat.val}</p>
-             </Card>
-          ))}
+            <Card className="p-4 flex items-center gap-4">
+                <div className="p-3 bg-white/5 rounded-full text-track-gold"><Award className="w-5 h-5" /></div>
+                <div><p className="text-xs text-gray-400 font-bold uppercase">Rank</p><p className="text-xl font-bold text-white">#1 Region</p></div>
+            </Card>
+             <Card className="p-4 flex items-center gap-4">
+                <div className="p-3 bg-white/5 rounded-full text-blue-400"><Wind className="w-5 h-5" /></div>
+                <div><p className="text-xs text-gray-400 font-bold uppercase">Avg Wind</p><p className="text-xl font-bold text-white">+0.8</p></div>
+            </Card>
        </div>
     </div>
   );

@@ -2,9 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Add the custom scrollbar styles from your index.html here */
-body {
-  background-color: #022c22;
-  color: #f8fafc;
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }
-/* ... rest of your scrollbar css ... */
