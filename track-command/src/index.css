@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Add the custom scrollbar styles from your index.html here */
+body {
+  background-color: #022c22;
+  color: #f8fafc;
+}
+/* ... rest of your scrollbar css ... */
